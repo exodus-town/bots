@@ -55,16 +55,28 @@ async function winner() {
       } MANA\n\nExodusDAO Treasury: ${treasury.toLocaleString(
         "en"
       )} MANA ($${Number((treasury * price).toFixed(2)).toLocaleString("en")})`;
-      console.log(text);
+      console.log(`\n${text}\n`);
       const tweet = await client.tweets.createTweet({
         text,
       });
-      console.log("tweet", tweet);
+      console.log("Tweet: ", tweet);
+      if (
+        authClient.token &&
+        (authClient.token.access_token !== token.access_token ||
+          authClient.token.refresh_token !== token.refresh_token ||
+          authClient.token.expires_at !== token.expires_at)
+      ) {
+        console.log("Updating access token...");
+        await write("token", authClient.token);
+        console.log("Updated access token!");
+      }
+      console.log("Updating auction cache...");
       await write("twitter", auction);
+      console.log("Updated auction cache!");
     } else {
       console.log(`Current auction still ongoing...`);
     }
   }
 }
 
-winner().catch(console.error);
+winner().catch((error) => console.error(error, (error as any).error));
