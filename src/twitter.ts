@@ -4,6 +4,7 @@ import { getName } from "./peer";
 import { getManaPrice, getTreasury } from "./treasury";
 import { read, write } from "./storage";
 import { TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET } from "./config";
+import { format } from "./format";
 
 export type Token = {
   refresh_token?: string;
@@ -35,7 +36,7 @@ async function winner() {
   const lastAuction = await read<SettledAuction>("twitter");
 
   if (!lastAuction) {
-    await write("twitter", auction);
+    await write("twitter", { ...auction, tokenId: "22" });
     console.log(
       "There was no record of the previous auction, storing current auction as the latest"
     );
@@ -50,16 +51,17 @@ async function winner() {
       ]);
       const text = `Auction Settled! 🎉\n\nParcel: ${auction.coords[0]},${
         auction.coords[1]
-      }\nWinner: ${winner}\nBid: ${
+      }\nWinner: ${winner}\nBid: ${format(
         auction.amount
-      } MANA\n\nExodusDAO Treasury: ${treasury.toLocaleString(
-        "en"
-      )} MANA ($${Number((treasury * price).toFixed(2)).toLocaleString("en")})`;
+      )} MANA\nTreasury: ${format(treasury)} MANA ($${format(
+        treasury * price,
+        2
+      )})`;
       console.log(`\n${text}\n`);
-      const tweet = await client.tweets.createTweet({
-        text,
-      });
-      console.log("Tweet: ", tweet);
+      // const tweet = await client.tweets.createTweet({
+      //   text,
+      // });
+      // console.log("Tweet: ", tweet);
       if (
         authClient.token &&
         (authClient.token.access_token !== token.access_token ||
