@@ -58,10 +58,10 @@ async function winner() {
         2
       )})`;
       console.log(`\n${text}\n`);
-      // const tweet = await client.tweets.createTweet({
-      //   text,
-      // });
-      // console.log("Tweet: ", tweet);
+      const tweet = await client.tweets.createTweet({
+        text,
+      });
+      console.log("Tweet: ", tweet);
       if (
         authClient.token &&
         (authClient.token.access_token !== token.access_token ||
