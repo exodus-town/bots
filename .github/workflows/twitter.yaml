@@ -1,0 +1,29 @@
+name: twitter
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  twitter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: oven-sh/setup-bun@v1
+      - name: Install
+        run: bun install
+      - name: twitter
+        run: bun run twitter
+        env:
+          SUBGRAPH_URL: ${{ secrets.SUBGRAPH_URL }}
+          PEER_URL: ${{ secrets.PEER_URL }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+          BUCKET_ACCESS_KEY_ID: ${{ secrets.BUCKET_ACCESS_KEY_ID }}
+          BUCKET_SECRET_ACCESS_KEY: ${{ secrets.BUCKET_SECRET_ACCESS_KEY }}
+          ALCHEMY_RPC_URL: ${{ secrets.ALCHEMY_RPC_URL }}
+          INFURA_RPC_URL: ${{ secrets.INFURA_RPC_URL }}
+          MANA_TOKEN_CONTRACT_ADDRESS: ${{ secrets.MANA_TOKEN_CONTRACT_ADDRESS }}
+          EXODUS_DAO_CONTRACT_ADDRESS: ${{ secrets.EXODUS_DAO_CONTRACT_ADDRESS }}
+          TWITTER_CLIENT_ID: ${{ secrets.TWITTER_CLIENT_ID }}
+          TWITTER_CLIENT_SECRET: ${{ secrets.TWITTER_CLIENT_SECRET }}

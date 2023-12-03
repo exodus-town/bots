@@ -1,0 +1,23 @@
+{
+  "name": "bots",
+  "type": "module",
+  "scripts": {
+    "twitter": "bun ./src/twitter",
+    "login": "bun ./src/login"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.465.0",
+    "@exodus.town/contracts": "^1.0.0",
+    "dotenv": "^16.3.1",
+    "fp-future": "^1.0.1",
+    "open": "^9.1.0",
+    "twitter-api-sdk": "^1.2.1",
+    "viem": "^1.19.11"
+  }
+}
