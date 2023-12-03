@@ -1,6 +1,9 @@
 name: twitter
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: "0 * * * *"
 
