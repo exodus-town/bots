@@ -56,10 +56,10 @@ async function winner() {
         "en"
       )} MANA ($${Number((treasury * price).toFixed(2)).toLocaleString("en")})`;
       console.log(text);
-      // const tweet = await client.tweets.createTweet({
-      //   text,
-      // });
-      // console.log("tweet", tweet);
+      const tweet = await client.tweets.createTweet({
+        text,
+      });
+      console.log("tweet", tweet);
       await write("twitter", auction);
     } else {
       console.log(`Current auction still ongoing...`);
