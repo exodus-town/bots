@@ -37,16 +37,18 @@ async function login() {
   open(url);
 
   // login
-  const { accessToken, refreshToken, expiresIn } = await client.loginWithOAuth2(
-    { code: await code, codeVerifier, redirectUri: CALLBACK_URL }
-  );
+  const { accessToken, refreshToken } = await client.loginWithOAuth2({
+    code: await code,
+    codeVerifier,
+    redirectUri: CALLBACK_URL,
+  });
 
   // stop server
   server.stop();
 
   // store token
   const token: Token = { accessToken, refreshToken: refreshToken! };
-  console.log("token", token);
+  console.log("Token", token);
   await write("twitter-token", token);
 
   // success!
