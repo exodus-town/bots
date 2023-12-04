@@ -1,10 +1,12 @@
-# bots
+# Exodus Town - Bots
 
 To install dependencies:
 
 ```bash
 bun install
 ```
+
+### Twitter
 
 To generate the initial access token and refresh token (this needs to be done once or whenever the tokens expire):
 
