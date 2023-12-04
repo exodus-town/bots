@@ -1,9 +1,13 @@
 import { TwitterApi } from "twitter-api-v2";
-import { SettledAuction, getLastSettledAuction } from "../lib/graph";
+import {
+  SettledAuction,
+  getBiddingWar,
+  getLastSettledAuction,
+} from "../lib/graph";
 import { getName } from "../lib/peer";
 import { getManaPrice, getTreasury } from "../lib/treasury";
 import { read, write } from "../lib/storage";
-import { format } from "../lib/format";
+import { format, formatTime } from "../lib/format";
 import { getToken } from "../lib/token";
 
 async function winner() {
@@ -29,19 +33,29 @@ async function winner() {
         getManaPrice(),
         getTreasury(),
       ]);
-      const text = `Auction Settled! 🎉\n\nParcel: ${auction.coords[0]},${
+      const { totalBids, totalWarBids, totalWarTime } = await getBiddingWar(
+        auction.tokenId
+      );
+      const biddingWar =
+        totalWarBids > 1
+          ? ` and a bidding war of ${totalWarBids} bids that lasted ${formatTime(
+              totalWarTime
+            )} 🔥`
+          : `.`;
+      const text = `Auction Settled! 🎉\n\nThe parcel ${auction.coords[0]},${
         auction.coords[1]
-      }\nWinner: ${winner}\nBid: ${format(
+      } was auctioned to ${winner} with a winning bid of ${format(
         auction.amount
-      )} MANA\nTreasury: ${format(treasury)} MANA ($${format(
-        treasury * price,
-        2
-      )})`;
+      )} MANA!\n\nThe auction had a total of ${totalBids} ${
+        totalBids === 1 ? "bid" : "bids"
+      }${biddingWar}\n\nThis takes the DAO treasury to ${format(
+        treasury
+      )} MANA ($${format(treasury * price, 2)}) 💰`;
       console.log(`\n${text}\n`);
       const tweet = await client.v2.tweet(text);
       console.log("Tweet: ", tweet);
       console.log("Updating auction cache...");
-      await write("twitter", auction);
+      await write("twitter-last-auction", auction);
       console.log("Updated auction cache!");
     } else {
       console.log(`Current auction still ongoing...`);
