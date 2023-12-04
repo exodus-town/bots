@@ -26,11 +26,11 @@ export async function getLastSettledAuction(): Promise<SettledAuction> {
   });
 
   if (resp.ok) {
-    const result: {
+    const result = (await resp.json()) as unknown as {
       data: {
         auctionSettleds: { tokenId: string; winner: string; amount: string }[];
       };
-    } = await resp.json();
+    };
 
     if (result.data.auctionSettleds.length > 0) {
       const data = result.data.auctionSettleds[0];

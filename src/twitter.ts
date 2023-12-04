@@ -5,24 +5,12 @@ import { getManaPrice, getTreasury } from "./treasury";
 import { read, write } from "./storage";
 import { TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET } from "./config";
 import { format } from "./format";
-
-export type Token = {
-  refresh_token?: string;
-  access_token?: string;
-  token_type?: string;
-  expires_at?: number;
-  scope?: string;
-};
+import { getToken } from "./get-token";
 
 async function winner() {
-  const token = await read<Token>("token");
-  if (!token) {
-    console.error(
-      `There's no access token, you need to login with "bun run login".`
-    );
-    return;
-  }
-
+  console.log("Generating token...");
+  const token = await getToken();
+  console.log("Token generated!");
   const authClient = new auth.OAuth2User({
     client_id: TWITTER_CLIENT_ID,
     client_secret: TWITTER_CLIENT_SECRET,
@@ -30,13 +18,14 @@ async function winner() {
     scopes: ["tweet.read", "tweet.write", "users.read", "offline.access"],
     token,
   });
+
   const client = new Twitter(authClient);
 
   const auction = await getLastSettledAuction();
   const lastAuction = await read<SettledAuction>("twitter");
 
   if (!lastAuction) {
-    await write("twitter", { ...auction, tokenId: "22" });
+    await write("twitter", auction);
     console.log(
       "There was no record of the previous auction, storing current auction as the latest"
     );

@@ -34,6 +34,7 @@ async function login() {
   const { token } = await authClient.requestAccessToken(await code);
   server.stop();
   await write("token", token);
+  console.log("Login successful!");
 }
 
 login().catch(console.error);
