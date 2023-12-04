@@ -3,7 +3,8 @@
   "type": "module",
   "scripts": {
     "twitter": "bun ./src/twitter",
-    "login": "bun ./src/login"
+    "login": "bun ./src/login",
+    "refresh": "bun ./src/refresh"
   },
   "devDependencies": {
     "bun-types": "latest"
@@ -17,7 +18,7 @@
     "dotenv": "^16.3.1",
     "fp-future": "^1.0.1",
     "open": "^9.1.0",
-    "twitter-api-sdk": "^1.2.1",
+    "twitter-api-v2": "^1.15.2",
     "viem": "^1.19.11"
   }
 }

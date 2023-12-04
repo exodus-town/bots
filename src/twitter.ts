@@ -1,31 +1,22 @@
-import { Client as Twitter, auth } from "twitter-api-sdk";
+import { TwitterApi } from "twitter-api-v2";
 import { SettledAuction, getLastSettledAuction } from "./graph";
 import { getName } from "./peer";
 import { getManaPrice, getTreasury } from "./treasury";
 import { read, write } from "./storage";
-import { TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET } from "./config";
 import { format } from "./format";
-import { getToken } from "./get-token";
+import { getToken } from "./token";
 
 async function winner() {
   console.log("Generating token...");
   const token = await getToken();
-  console.log("Token generated!");
-  const authClient = new auth.OAuth2User({
-    client_id: TWITTER_CLIENT_ID,
-    client_secret: TWITTER_CLIENT_SECRET,
-    callback: "http://127.0.0.1:3123",
-    scopes: ["tweet.read", "tweet.write", "users.read", "offline.access"],
-    token,
-  });
 
-  const client = new Twitter(authClient);
+  const client = new TwitterApi(token.accessToken);
 
   const auction = await getLastSettledAuction();
-  const lastAuction = await read<SettledAuction>("twitter");
+  const lastAuction = await read<SettledAuction>("twitter-last-auction");
 
   if (!lastAuction) {
-    await write("twitter", auction);
+    await write("twitter-last-auction", auction);
     console.log(
       "There was no record of the previous auction, storing current auction as the latest"
     );
@@ -47,20 +38,8 @@ async function winner() {
         2
       )})`;
       console.log(`\n${text}\n`);
-      const tweet = await client.tweets.createTweet({
-        text,
-      });
+      const tweet = await client.v2.tweet(text);
       console.log("Tweet: ", tweet);
-      if (
-        authClient.token &&
-        (authClient.token.access_token !== token.access_token ||
-          authClient.token.refresh_token !== token.refresh_token ||
-          authClient.token.expires_at !== token.expires_at)
-      ) {
-        console.log("Updating access token...");
-        await write("token", authClient.token);
-        console.log("Updated access token!");
-      }
       console.log("Updating auction cache...");
       await write("twitter", auction);
       console.log("Updated auction cache!");
