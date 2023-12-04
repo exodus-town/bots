@@ -2,9 +2,9 @@
   "name": "bots",
   "type": "module",
   "scripts": {
-    "twitter": "bun ./src/twitter",
-    "login": "bun ./src/login",
-    "refresh": "bun ./src/refresh"
+    "twitter": "bun ./src/commands/twitter",
+    "login": "bun ./src/commands/login",
+    "refresh": "bun ./src/commands/refresh"
   },
   "devDependencies": {
     "bun-types": "latest"

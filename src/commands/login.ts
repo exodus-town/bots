@@ -1,9 +1,9 @@
 import open from "open";
 import future from "fp-future";
-import { TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET } from "./config";
-import { write } from "./storage";
+import { TWITTER_CLIENT_ID, TWITTER_CLIENT_SECRET } from "../lib/config";
+import { write } from "../lib/storage";
 import { TwitterApi } from "twitter-api-v2";
-import { Token } from "./token";
+import { Token } from "../lib/token";
 
 const CALLBACK_PORT = 3123;
 const CALLBACK_URL = `http://127.0.0.1:${CALLBACK_PORT}`;

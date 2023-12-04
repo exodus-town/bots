@@ -1,4 +1,4 @@
-import { getToken } from "./token";
+import { getToken } from "../lib/token";
 
 async function refresh() {
   const token = await getToken();

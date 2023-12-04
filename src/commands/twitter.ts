@@ -1,10 +1,10 @@
 import { TwitterApi } from "twitter-api-v2";
-import { SettledAuction, getLastSettledAuction } from "./graph";
-import { getName } from "./peer";
-import { getManaPrice, getTreasury } from "./treasury";
-import { read, write } from "./storage";
-import { format } from "./format";
-import { getToken } from "./token";
+import { SettledAuction, getLastSettledAuction } from "../lib/graph";
+import { getName } from "../lib/peer";
+import { getManaPrice, getTreasury } from "../lib/treasury";
+import { read, write } from "../lib/storage";
+import { format } from "../lib/format";
+import { getToken } from "../lib/token";
 
 async function winner() {
   console.log("Generating token...");
