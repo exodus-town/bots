@@ -5,4 +5,7 @@ async function refresh() {
   console.log("New token", token);
 }
 
-refresh().catch((error) => console.error(error, error.code));
+refresh().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

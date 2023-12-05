@@ -4,7 +4,8 @@
   "scripts": {
     "twitter": "bun ./src/commands/twitter",
     "login": "bun ./src/commands/login",
-    "refresh": "bun ./src/commands/refresh"
+    "test-refresh": "bun ./src/commands/test-refresh",
+    "test-tweet": "bun ./src/commands/test-tweet"
   },
   "devDependencies": {
     "bun-types": "latest"

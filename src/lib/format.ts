@@ -1,4 +1,4 @@
-export function format(value: number, digits = 0) {
+export function formatCurrency(value: number, digits = 0) {
   return Number(value.toFixed(digits)).toLocaleString("en");
 }
 

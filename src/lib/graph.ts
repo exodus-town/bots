@@ -50,7 +50,7 @@ export async function getLastSettledAuction(): Promise<SettledAuction> {
 export async function getBiddingWar(tokenId: string) {
   const query = `query {
     auctionBids(first: 1000, where: { tokenId: "${tokenId}" }, orderBy: blockNumber, orderDirection: desc) {
-      id
+      sender
     }
     auctionExtendeds(first: 1000, where: { tokenId: "${tokenId}" }, orderBy: endTime, orderDirection: desc) {
       endTime
@@ -67,22 +67,25 @@ export async function getBiddingWar(tokenId: string) {
   if (resp.ok) {
     const result = (await resp.json()) as unknown as {
       data: {
-        auctionBids: { id: string }[];
+        auctionBids: { sender: string }[];
         auctionExtendeds: { endTime: string }[];
       };
     };
-
+    const participants = result.data.auctionBids.reduce(
+      (set, bid) => set.add(bid.sender),
+      new Set<string>()
+    );
+    const totalParticipants = participants.size;
     const totalBids = result.data.auctionBids.length;
-    const totalExtends = result.data.auctionExtendeds.length;
+    const totalWarBids = result.data.auctionExtendeds.length;
     const totalWarTime =
-      totalExtends > 0
+      totalWarBids > 0
         ? Number(result.data.auctionExtendeds[0].endTime) -
-          Number(result.data.auctionExtendeds[totalExtends - 1].endTime) +
+          Number(result.data.auctionExtendeds[totalWarBids - 1].endTime) +
           300
         : 0;
-    const totalWarBids = totalExtends > 0 ? totalExtends + 1 : 0;
 
-    return { totalBids, totalWarBids, totalWarTime };
+    return { totalParticipants, totalBids, totalWarBids, totalWarTime };
   }
 
   throw new Error(`Error: ${await resp.text()}`);

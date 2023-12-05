@@ -7,8 +7,9 @@ import {
 import { getName } from "../lib/peer";
 import { getManaPrice, getTreasury } from "../lib/treasury";
 import { read, write } from "../lib/storage";
-import { format, formatTime } from "../lib/format";
+import { formatCurrency, formatTime } from "../lib/format";
 import { getToken } from "../lib/token";
+import { getTweet } from "../lib/twitter";
 
 async function winner() {
   console.log("Generating token...");
@@ -28,29 +29,7 @@ async function winner() {
     console.log("Token ID from last auction:", lastAuction!.tokenId);
     console.log("Token ID from current auction:", auction.tokenId);
     if (Number(auction.tokenId) > Number(lastAuction.tokenId)) {
-      const [winner, price, treasury] = await Promise.all([
-        getName(auction.winner),
-        getManaPrice(),
-        getTreasury(),
-      ]);
-      const { totalBids, totalWarBids, totalWarTime } = await getBiddingWar(
-        auction.tokenId
-      );
-      const biddingWar =
-        totalWarBids > 1
-          ? ` and a bidding war of ${totalWarBids} bids that lasted ${formatTime(
-              totalWarTime
-            )} 🔥`
-          : `.`;
-      const text = `Auction Settled! 🎉\n\nThe parcel ${auction.coords[0]},${
-        auction.coords[1]
-      } was auctioned to ${winner} with a winning bid of ${format(
-        auction.amount
-      )} MANA!\n\nThe auction had a total of ${totalBids} ${
-        totalBids === 1 ? "bid" : "bids"
-      }${biddingWar}\n\nThis takes the DAO treasury to ${format(
-        treasury
-      )} MANA ($${format(treasury * price, 2)}) 💰`;
+      const text = await getTweet(auction);
       console.log(`\n${text}\n`);
       const tweet = await client.v2.tweet(text);
       console.log("Tweet: ", tweet);
@@ -63,4 +42,7 @@ async function winner() {
   }
 }
 
-winner().catch((error) => console.error(error, (error as any).error));
+winner().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

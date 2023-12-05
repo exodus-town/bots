@@ -56,4 +56,7 @@ async function login() {
   return token;
 }
 
-login().catch(console.error);
+login().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
