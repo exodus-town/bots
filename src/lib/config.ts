@@ -9,9 +9,13 @@ export const BUCKET_ACCESS_KEY_ID = process.env.BUCKET_ACCESS_KEY_ID!;
 export const BUCKET_SECRET_ACCESS_KEY = process.env.BUCKET_SECRET_ACCESS_KEY!;
 export const ALCHEMY_RPC_URL = process.env.ALCHEMY_RPC_URL!;
 export const INFURA_RPC_URL = process.env.INFURA_RPC_URL!;
-export const MANA_TOKEN_CONTRACT_ADDRESS = process.env
-  .MANA_TOKEN_CONTRACT_ADDRESS! as `0x${string}`;
-export const EXODUS_DAO_CONTRACT_ADDRESS = process.env
-  .EXODUS_DAO_CONTRACT_ADDRESS! as `0x${string}`;
+export const MANA_TOKEN_CONTRACT_ADDRESS =
+  process.env.MANA_TOKEN_CONTRACT_ADDRESS!;
+export const TOWN_TOKEN_CONTRACT_ADDRESS =
+  process.env.TOWN_TOKEN_CONTRACT_ADDRESS!;
+export const EXODUS_DAO_CONTRACT_ADDRESS =
+  process.env.EXODUS_DAO_CONTRACT_ADDRESS!;
 export const TWITTER_CLIENT_ID = process.env.TWITTER_CLIENT_ID!;
 export const TWITTER_CLIENT_SECRET = process.env.TWITTER_CLIENT_SECRET!;
+export const DISCORD_TOKEN = process.env.DISCORD_TOKEN!;
+export const DISCORD_CHANNEL_ID = process.env.DISCORD_CHANNEL_ID!;

@@ -21,3 +21,13 @@ bun run twitter
 ```
 
 The bot is ran every hour by a GitHub action to refresh its access tokens, and when it detects that an auction has been settled, it posts a tweet with the details of the auction (winner, bid amount, parcel, and the treasury).
+
+### Discord
+
+To run the bot:
+
+```bash
+bun run discord
+```
+
+The bot polls the subgraph every 30 seconds, sending updates to the `#bidding-war` discord channel when a bid is created or an auction is settled. The bot runs for 5 minutes and then exits, and is ran every 5 minutes by a GitHub action.

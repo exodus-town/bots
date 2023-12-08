@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "twitter": "bun ./src/commands/twitter",
+    "discord": "bun ./src/commands/discord",
     "login": "bun ./src/commands/login",
     "test-refresh": "bun ./src/commands/test-refresh",
     "test-tweet": "bun ./src/commands/test-tweet"
@@ -16,6 +17,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.465.0",
     "@exodus.town/contracts": "^1.0.0",
+    "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
     "fp-future": "^1.0.1",
     "open": "^9.1.0",

@@ -1,19 +1,19 @@
-name: twitter
+name: discord
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "*/5 * * * *"
 
 jobs:
-  twitter:
+  discord:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
       - uses: oven-sh/setup-bun@v1
       - name: Install
         run: bun install
-      - name: Twitter
-        run: bun run twitter
+      - name: Discord
+        run: bun run discord
         env:
           SUBGRAPH_URL: ${{ secrets.SUBGRAPH_URL }}
           PEER_URL: ${{ secrets.PEER_URL }}
