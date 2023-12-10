@@ -21,6 +21,10 @@ type DiscordData = {
 async function main() {
   const startTime = Date.now();
 
+  console.log("startTime", startTime);
+  console.log("DISCORD_TOKEN", DISCORD_TOKEN);
+  console.log("DISCORD_CHANNEL_ID", DISCORD_CHANNEL_ID);
+
   const client = new Client({ intents: [] });
   console.log(`Logging in...`);
   await client.login(DISCORD_TOKEN);
