@@ -113,6 +113,7 @@ async function main() {
         await sleep(SLEEP_TIME);
       } else {
         console.log(`No more time left`);
+        break;
       }
 
       elapsedTime = Date.now() - startTime;
