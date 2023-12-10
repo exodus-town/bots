@@ -30,4 +30,4 @@ To run the bot:
 bun run discord
 ```
 
-The bot polls the subgraph every 30 seconds, sending updates to the `#bidding-war` discord channel when a bid is created or an auction is settled. The bot runs for 5 minutes and then exits, and is ran every 5 minutes by a GitHub action.
+The bot polls the subgraph every 30 seconds, sending updates to the `#bidding-war` discord channel when a bid is created or an auction is settled. The bot runs for 10 minutes and then exits, and is ran every 10 minutes by a GitHub action.
