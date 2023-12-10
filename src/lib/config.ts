@@ -18,4 +18,4 @@ export const EXODUS_DAO_CONTRACT_ADDRESS =
 export const TWITTER_CLIENT_ID = process.env.TWITTER_CLIENT_ID!;
 export const TWITTER_CLIENT_SECRET = process.env.TWITTER_CLIENT_SECRET!;
 export const DISCORD_TOKEN = process.env.DISCORD_TOKEN!;
-export const DISCORD_CHANNEL_ID = process.env.DISCORD_CHANNEL_ID!;
+export const DISCORD_CHANNEL_ID = "1141005876740759612";
