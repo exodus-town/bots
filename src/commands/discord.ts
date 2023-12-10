@@ -9,7 +9,7 @@ import {
 import { DISCORD_CHANNEL_ID, DISCORD_TOKEN } from "../lib/config";
 import { sleep } from "../lib/sleep";
 
-const MAX_TIME = 5 * 60 * 1000; // 5 minutes
+const MAX_TIME = 10 * 60 * 1000; // 10 minutes
 const SLEEP_TIME = 30 * 1000; // 30 seconds
 const COOLDOWN = 1 * 1000; // 1 second
 
