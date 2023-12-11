@@ -52,7 +52,7 @@ export async function getAuctionSettledMessage(auction: SettledAuction) {
   } parcel!\n\nThe auction saw a total of ${totalBids} ${
     totalBids === 1 ? "bid" : "bids"
   }${
-    totalParticipants > 1
+    totalParticipants > 1 && !isRecord
       ? ` coming from ${totalParticipants} participants`
       : ``
   }${biddingWar}${treasuryMessage}`;
