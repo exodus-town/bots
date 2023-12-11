@@ -138,3 +138,14 @@ export async function getHighestBid(): Promise<number> {
       : 0;
   return highestBid;
 }
+
+export async function getAuctionsWon(address: string): Promise<number> {
+  const { auctionSettleds } = await request<{
+    auctionSettleds: { id: string }[];
+  }>(`query {
+    auctionSettleds(first: 1000, where: { winner: "${address.toLowerCase()}" }) {
+      id
+    }
+  }`);
+  return auctionSettleds.length;
+}

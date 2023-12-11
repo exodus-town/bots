@@ -2,7 +2,13 @@ import { TOWN_TOKEN_CONTRACT_ADDRESS } from "./config";
 import { toCoords } from "./coords";
 import { getBalanceOf } from "./eth";
 import { formatCurrency, formatTime } from "./format";
-import { Bid, SettledAuction, getBiddingWar, getHighestBid } from "./graph";
+import {
+  Bid,
+  SettledAuction,
+  getAuctionsWon,
+  getBiddingWar,
+  getHighestBid,
+} from "./graph";
 import { getName } from "./peer";
 import { getManaPrice, getTreasury } from "./treasury";
 
@@ -18,7 +24,7 @@ export async function getAuctionSettledMessage(auction: SettledAuction) {
     getName(auction.winner),
     getManaPrice(),
     getTreasury(),
-    getBalanceOf(TOWN_TOKEN_CONTRACT_ADDRESS, auction.winner, 0),
+    getAuctionsWon(auction.winner),
     getHighestBid(),
     getBiddingWar(auction.tokenId),
   ]);
