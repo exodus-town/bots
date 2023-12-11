@@ -25,12 +25,18 @@ export async function getAuctionSettledMessage(auction: SettledAuction) {
 
   const [x, y] = toCoords(auction.tokenId);
   const isRecord = auction.amount > record;
-  const biddingWar =
-    totalWarBids > 3
-      ? `, with a bidding battle of ${totalWarBids} bids during the last ${formatTime(
-          totalWarTime
-        )} 🔥!`
-      : `.`;
+  const hasBattle = totalWarBids > 3;
+  const biddingWar = hasBattle
+    ? `, with a bidding battle of ${totalWarBids} bids during the last ${formatTime(
+        totalWarTime
+      )} 🔥!`
+    : `.`;
+
+  const treasuryMessage = hasBattle
+    ? ""
+    : `\n\nThis activity has boosted the DAO treasury to ${formatCurrency(
+        treasury
+      )} MANA ($${formatCurrency(treasury * price, 2)}) 💰`;
   const text = `Auction Settled! 🎉\n\nParcel ${x},${y} has been claimed by ${winner} with a winning bid of ${formatCurrency(
     auction.amount
   )} MANA${
@@ -43,9 +49,7 @@ export async function getAuctionSettledMessage(auction: SettledAuction) {
     totalParticipants > 1
       ? ` coming from ${totalParticipants} participants`
       : ``
-  }${biddingWar}\n\nThis activity has boosted the DAO treasury to ${formatCurrency(
-    treasury
-  )} MANA ($${formatCurrency(treasury * price, 2)}) 💰`;
+  }${biddingWar}${treasuryMessage}`;
   return text;
 }
 
